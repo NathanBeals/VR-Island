@@ -6,6 +6,7 @@ public class SpiritModeEffect : MonoBehaviour
 {
   public GameObject m_Head;
   public GameObject m_Body;
+  public float m_Height = 1.75f;
   public GameObject m_LowEffect;
   public GameObject m_HighEffect;
   public float m_LowEffectDistance = 2f;
@@ -30,10 +31,10 @@ public class SpiritModeEffect : MonoBehaviour
   {
     if (!m_Head || !m_Body || !m_LowEffect || !m_HighEffect) return;
 
-      m_LowEffect.transform.position = m_Body.transform.position;
-      m_HighEffect.transform.position = m_Body.transform.position;
-    
-    m_CurDist = Vector3.Distance(m_Head.transform.position, m_Body.transform.position);
+    m_LowEffect.transform.position = m_Body.transform.position;
+    m_HighEffect.transform.position = m_Body.transform.position;
+
+    m_CurDist = Vector3.Distance(Vector3.Cross(m_Head.transform.position, Vector3.up), Vector3.Cross(m_Body.transform.position, Vector3.up));
     if (m_CurDist > m_HighEffectDistance)
     {
       m_HighEffect.SetActive(true);
