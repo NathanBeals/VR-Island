@@ -39,6 +39,6 @@ public class PlayerController_SteamVR : MonoBehaviour
     var forwardVector = new Vector3(m_Face.transform.forward.x, 0, m_Face.transform.forward.z).normalized * m_Forward;
     var rightVector = new Vector3(m_Face.transform.right.x, 0, m_Face.transform.right.z).normalized * m_Right;
 
-    transform.position = transform.position + (forwardVector + rightVector) * (Input.GetAxis("L Grip Squeeze") > 0f ? m_RunSpeed : m_WalkSpeed);
+    transform.position = transform.position + (forwardVector + rightVector) * (SteamVR_Actions._default.GrabGrip[SteamVR_Input_Sources.Any].state ? m_RunSpeed : m_WalkSpeed);
   }
 }
