@@ -23,8 +23,10 @@ public class SpiritModeEffect : MonoBehaviour
 
   private void OnDisable()
   {
-    m_LowEffect.SetActive(false);
-    m_HighEffect.SetActive(false);
+    if (m_LowEffect)
+      m_LowEffect.SetActive(false);
+    if (m_LowEffect)
+      m_HighEffect.SetActive(false);
   }
 
   public void Update()
