@@ -1700,6 +1700,14 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 14
       objectReference: {fileID: 0}
+    - target: {fileID: 199336204994076666, guid: c149a69b04d97594d96c7210a3bad9fe, type: 3}
+      propertyPath: m_NormalDirection
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 198396958669409120, guid: c149a69b04d97594d96c7210a3bad9fe, type: 3}
+      propertyPath: EmissionModule.rateOverTime.scalar
+      value: 20
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c149a69b04d97594d96c7210a3bad9fe, type: 3}
 --- !u!4 &288823153 stripped
