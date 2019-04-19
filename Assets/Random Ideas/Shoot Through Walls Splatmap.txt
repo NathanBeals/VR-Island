@@ -1,0 +1,10 @@
+Idea
+shoot splat map on wall
+splatmap makes wall transparent
+shoot through wall
+Remove wall splats
+cover restored
+
+Implementation
+var basetexture, basenormal, modifiedtexture, modifiednormal; 
+var splatmap = vector<splat<int splattype, int x, int y>>();
