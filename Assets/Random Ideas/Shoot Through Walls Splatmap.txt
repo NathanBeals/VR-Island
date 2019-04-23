@@ -5,6 +5,21 @@ shoot through wall
 Remove wall splats
 cover restored
 
+//Zero Stage
+Hitscan Gun
+
+//First Stage, splat map
 Implementation
 var basetexture, basenormal, modifiedtexture, modifiednormal; 
+var list<splattexture(texture, normalmap)> -> indexible by int (splattype)
 var splatmap = vector<splat<int splattype, int x, int y>>();
+
+//Second Stage, Shoot through
+ShootThoughScript (raycasthit._texturecoord will only be non-null when the object has a mesh collider)
+var hit = raycast(shot);
+Request objects shader,
+if shader is of type splatmap,
+var opacity = GetOpacityOfModifiedTexture(),
+if (Opacity > x) return;
+else
+Shoot through object (toggle off world collision? use only hitscan gun? override oncollision to ignore objects from raycast?)
