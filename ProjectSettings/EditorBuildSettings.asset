@@ -8,4 +8,22 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Main.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 0
+    path: Assets/3rd Party Assets/Controller Tester/Scenes/controllerTest.unity
+    guid: f4b5988cbcf23d04a83de3a482f540d8
+  - enabled: 1
+    path: Assets/Scenes/Scenery.unity
+    guid: 2e394f79957fcd64abb266af436ccf9f
+  - enabled: 1
+    path: Assets/Scenes/Terrain.unity
+    guid: b435b05e1a62ad34e8ab83e92a5ea886
+  - enabled: 0
+    path: Assets/3rd Party Assets/beffio/Medieval Kingdom/Scenes/Mobile&VR/Maps/Map (1) mobile.unity
+    guid: 528676a431b0d3e428c01aceabbb242d
+  - enabled: 0
+    path: Assets/3rd Party Assets/beffio/Medieval Kingdom/Scenes/Mobile&VR/Maps/Map (2) mobile.unity
+    guid: 2e8a183c1e71c5c479935f417a715636
+  - enabled: 0
+    path: Assets/3rd Party Assets/beffio/Medieval Kingdom/Scenes/Mobile&VR/Maps/Map (3) mobile.unity
+    guid: 5033f466457636a498abd022c21d1758
   m_configObjects: {}
