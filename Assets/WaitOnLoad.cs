@@ -6,10 +6,11 @@ using UnityEngine;
 public class WaitOnLoad : MonoBehaviour
 {
   public Rigidbody m_Target;
+  public float m_Delay = 1.0f;
 
   public void OnStart()
   {
-    m_Target.Sleep();
+    EnablePhysics(false);
     StartCoroutine(EnableOnLoad());
   }
 
@@ -19,6 +20,14 @@ public class WaitOnLoad : MonoBehaviour
     while (msm.m_ScenesLoading)
       yield return new WaitForSeconds(.1f);
 
-    m_Target.WakeUp();
+    yield return new WaitForSeconds(m_Delay);
+    EnablePhysics(true);
+  }
+
+  public void EnablePhysics(bool Active)
+  {
+    //Rigidbody.sleep //Does not do what you think it does
+    m_Target.isKinematic = !Active;
+    m_Target.useGravity = Active;
   }
 }
