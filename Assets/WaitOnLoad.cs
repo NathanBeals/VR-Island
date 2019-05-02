@@ -8,7 +8,7 @@ public class WaitOnLoad : MonoBehaviour
   public Rigidbody m_Target;
   public float m_Delay = 1.0f;
 
-  public void OnStart()
+  public void Start()
   {
     EnablePhysics(false);
     StartCoroutine(EnableOnLoad());
