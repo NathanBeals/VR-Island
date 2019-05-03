@@ -219,6 +219,26 @@
               "output": "/actions/default/in/squeeze"
             }
           }
+        },
+        {
+          "path": "/user/hand/left/input/trackpad",
+          "mode": "trackpad",
+          "parameters": {},
+          "inputs": {
+            "position": {
+              "output": "/actions/default/in/manualmovement"
+            }
+          }
+        },
+        {
+          "path": "/user/hand/right/input/trackpad",
+          "mode": "trackpad",
+          "parameters": {},
+          "inputs": {
+            "position": {
+              "output": "/actions/default/in/manualmovement"
+            }
+          }
         }
       ],
       "skeleton": [
@@ -283,5 +303,5 @@
   },
   "controller_type": "vive_controller",
   "description": "",
-  "name": "custom_vive_controller"
+  "name": "ManualMoveBinding"
 }
