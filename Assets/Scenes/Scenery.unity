@@ -14010,6 +14010,10 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 2.0099006
       objectReference: {fileID: 0}
+    - target: {fileID: 64573879683202964, guid: f74166a573ef3b147bd8159523c9c6aa, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 4300002, guid: f8a0e8746a2631747a2b2b77bb47b605, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f74166a573ef3b147bd8159523c9c6aa, type: 3}
 --- !u!4 &2120618230 stripped
