@@ -22,47 +22,42 @@ public class Container : MonoBehaviour
 
   public float m_DistFromCamera = 1.0f;
   public float m_Curvature = 0.0f; //Degree Curvature 0 - 360
+  public float m_ItemHDist = .5f;
 
-  public float m_DisplayWidth = 1;
+  public float m_DisplayWidth = .5f;
   public float m_DisplayHeight = .5f;
-  public float m_DisplayItemCount = 3;
+  public int m_DisplayItemCount = 3;
 
   int m_ScrollIDX = 0;
-  List<GameObject> m_Contents = new List<GameObject>();
-  List<GameObject> m_DisplayingContents = new List<GameObject>(); //Smaller instantiated contents with dissabled scripts
+  List<StorablePrefab> m_Contents = new List<StorablePrefab>();
+  List<GameObject> m_DisplayItems = new List<GameObject>(); //Smaller instantiated contents with disabled scripts
 
   bool m_DisplayingContentList = false;
+  bool m_ListDirty = true;
 
-  public void AddItem(GameObject obj)
+  public void AddItem(StorablePrefab obj)
   {
-    foreach (MonoBehaviour x in obj.GetComponents<MonoBehaviour>())
-      x.enabled = false;
-    obj.SetActive(false);
-    obj.transform.position = this.transform.position;
     m_Contents.Add(obj);
+    m_ListDirty = true;
   }
 
-  public void RemoveItem(GameObject obj)
+  public void RemoveItem(StorablePrefab obj)
   {
-    foreach (MonoBehaviour x in obj.GetComponents<MonoBehaviour>())
-      x.enabled = true;
-    obj.transform.position = this.transform.position;
-    obj.SetActive(true);
     m_Contents.Remove(obj);
-
-
+    m_ListDirty = true;
   }
 
-  public GameObject GetHighlightedObj()
+  public StorablePrefab GetHighlightedObj()
   {
-    if (m_Contents.Count <= 0) return null;
-    if (!m_Contents[m_ScrollIDX]) return null;
     return m_Contents[m_ScrollIDX];
   }
 
-  public void ShowList( bool Show)
+  public void ShowList(bool Show)
   {
     m_DisplayingContentList = Show;
+
+    foreach (var x in m_DisplayItems)
+      x.GetComponent<Renderer>().enabled = Show;
   }
 
   public void ScrollContentList(int ScrollAmount)
@@ -70,23 +65,56 @@ public class Container : MonoBehaviour
     m_ScrollIDX = Mathf.Clamp(m_ScrollIDX + ScrollAmount, 0, m_Contents.Count - 1);
   }
 
+  //Create a list of smaller objects that ignore collision and physics
   private void UpdateStores()
   {
+    foreach (var x in m_DisplayItems)
+      Destroy(x);
+
     foreach (var x in m_Contents)
     {
-      if (x is IStorableGObj)
+      m_DisplayItems.Add(Instantiate(StorablePrefabManager.GetMgr().GetPrefab(x.m_PrefabName), m_Camera.transform.position + (m_Camera.transform.forward * m_DistFromCamera), Quaternion.identity));
+      var lastElem = m_DisplayItems[m_DisplayItems.Count - 1];
 
+      foreach (MonoBehaviour y in lastElem.GetComponents<MonoBehaviour>())
+        y.enabled = true;
+
+      if (lastElem.GetComponent<Collider>())
+        lastElem.GetComponent<Collider>().enabled = false;
+
+      if (lastElem.GetComponent<Rigidbody>())
+      {
+        lastElem.GetComponent<Rigidbody>().isKinematic = false;
+        lastElem.GetComponent<Rigidbody>().useGravity = false;
+      }
     }
+
+    m_ListDirty = false;
   }
   public void Update()
   {
     if (m_DisplayingContentList)
-      DisplayContentList();
+      UpdateContentDisplay();
   }
 
   //Runs in update loop
-  private void DisplayContentList()
+  private void UpdateContentDisplay()
   {
-    if (m_Contents != )
+    if (m_ListDirty)
+      UpdateStores();
+
+    if (m_DisplayItems.Count < 1) return;
+
+    if (m_ScrollIDX > m_DisplayItems.Count - 1) m_ScrollIDX = 0;
+    if (m_ScrollIDX < m_DisplayItems.Count - 1) m_ScrollIDX = m_DisplayItems.Count - 1;
+
+    int i = m_DisplayItemCount;
+
+    //TODO: figure out how to display items in a variable display
+    //TODO: WORKING HERE
+    for (int x = 0; x < m_DisplayItemCount; x++)
+    {
+
+    }
   }
 }
