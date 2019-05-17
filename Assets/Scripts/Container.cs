@@ -9,7 +9,7 @@ using UnityEngine;
  * An displayed object in the world
  * Can be queried for items, items can be taken, or placed inside
  * 
- * What actions involve it
+ * What actions involve it?
  * Query the items inside by placing controller inside, gripping, and looking at items displayed in horizontal (linked to head), list of items
  * Take an item by placing controller inside, gripping and selecting an Item by using the touch pad
  * Place an Item inside by placing the controller inside and releasing the grip (or pressing grip again) (or dropping the item over/near the container)
@@ -20,12 +20,16 @@ public class Container : MonoBehaviour
   public GameObject m_Camera; //What to display to
   public GameObject m_Container; //What to display from (typicaly self, but for things placed close to the body it might be a hand)
 
+  public float m_DistFromCamera = 1.0f;
+  public float m_Curvature = 0.0f; //Degree Curvature 0 - 360
+
   public float m_DisplayWidth = 1;
   public float m_DisplayHeight = .5f;
   public float m_DisplayItemCount = 3;
 
   int m_ScrollIDX = 0;
-  List<GameObject> m_Contents;
+  List<GameObject> m_Contents = new List<GameObject>();
+  List<GameObject> m_DisplayingContents = new List<GameObject>(); //Smaller instantiated contents with dissabled scripts
 
   bool m_DisplayingContentList = false;
 
@@ -45,6 +49,8 @@ public class Container : MonoBehaviour
     obj.transform.position = this.transform.position;
     obj.SetActive(true);
     m_Contents.Remove(obj);
+
+
   }
 
   public GameObject GetHighlightedObj()
@@ -64,14 +70,23 @@ public class Container : MonoBehaviour
     m_ScrollIDX = Mathf.Clamp(m_ScrollIDX + ScrollAmount, 0, m_Contents.Count - 1);
   }
 
+  private void UpdateStores()
+  {
+    foreach (var x in m_Contents)
+    {
+      if (x is IStorableGObj)
+
+    }
+  }
   public void Update()
   {
     if (m_DisplayingContentList)
       DisplayContentList();
   }
 
+  //Runs in update loop
   private void DisplayContentList()
   {
-
+    if (m_Contents != )
   }
 }
