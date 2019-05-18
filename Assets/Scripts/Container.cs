@@ -18,7 +18,6 @@ using UnityEngine;
 public class Container : MonoBehaviour
 {
   public GameObject m_Camera; //What to display to
-  public GameObject m_Container; //What to display from (typicaly self, but for things placed close to the body it might be a hand)
 
   public float m_DistFromCamera = 1.0f;
   public float m_Curvature = 0.0f; //Degree Curvature between items in display 0 - 45 (not enforced)
@@ -43,6 +42,12 @@ public class Container : MonoBehaviour
   public void RemoveItem(StorablePrefab obj)
   {
     m_Contents.Remove(obj);
+    m_ListDirty = true;
+  }
+
+  public void ClearContents()
+  {
+    m_Contents.Clear();
     m_ListDirty = true;
   }
 
