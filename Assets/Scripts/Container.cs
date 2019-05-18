@@ -21,12 +21,11 @@ public class Container : MonoBehaviour
   public GameObject m_Container; //What to display from (typicaly self, but for things placed close to the body it might be a hand)
 
   public float m_DistFromCamera = 1.0f;
-  public float m_Curvature = 0.0f; //Degree Curvature 0 - 360
-  public float m_ItemHDist = .5f;
+  public float m_Curvature = 0.0f; //Degree Curvature between items in display 0 - 45 (not enforced)
 
   public float m_DisplayWidth = .5f;
   public float m_DisplayHeight = .5f;
-  public int m_DisplayItemCount = 3;
+  public int m_MaxDisplayItems = 3;
 
   int m_ScrollIDX = 0;
   List<StorablePrefab> m_Contents = new List<StorablePrefab>();
@@ -105,16 +104,29 @@ public class Container : MonoBehaviour
 
     if (m_DisplayItems.Count < 1) return;
 
-    if (m_ScrollIDX > m_DisplayItems.Count - 1) m_ScrollIDX = 0;
-    if (m_ScrollIDX < m_DisplayItems.Count - 1) m_ScrollIDX = m_DisplayItems.Count - 1;
+    //Wrap Scroll around (duplicated?)
+    while (m_ScrollIDX > m_DisplayItems.Count - 1) m_ScrollIDX -= m_DisplayItems.Count;
+    while (m_ScrollIDX < 0) m_ScrollIDX += m_DisplayItems.Count;
 
-    int i = m_DisplayItemCount;
+    //Fix for less than max items
+    var displayItemCount = m_DisplayItems.Count < m_MaxDisplayItems ? m_DisplayItems.Count : m_MaxDisplayItems;
+    var sideItemCount = (displayItemCount / 2);
 
-    //TODO: figure out how to display items in a variable display
-    //TODO: WORKING HERE
-    for (int x = 0; x < m_DisplayItemCount; x++)
+    //Hide all
+    foreach (var x in m_DisplayItems) //HACK: slow
+      x.GetComponent<Renderer>().enabled = false;
+
+    //Reveal and position others
+    for (var x = -sideItemCount; x < sideItemCount; x++)
     {
+      //Wrapping
+      var wrappedx = m_ScrollIDX + x;
+      while (m_ScrollIDX + wrappedx > m_DisplayItems.Count - 1) wrappedx -= m_DisplayItems.Count;
+      while (m_ScrollIDX - wrappedx < 0) wrappedx += m_DisplayItems.Count;
 
+      m_DisplayItems[wrappedx].GetComponent<Renderer>().enabled = true;
+      m_DisplayItems[wrappedx].transform.position = new Vector3(m_DistFromCamera * (Mathf.Cos(Mathf.Deg2Rad * wrappedx * m_Curvature)), 0, m_DistFromCamera * (Mathf.Sin(Mathf.Deg2Rad * wrappedx * m_Curvature))) + m_Camera.transform.position + m_Camera.transform.forward * m_DistFromCamera; //the big number crunch
     }
   }
 }
+
