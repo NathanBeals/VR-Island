@@ -61,7 +61,8 @@ public class Container : MonoBehaviour
     m_DisplayingContentList = Show;
 
     foreach (var x in m_DisplayItems)
-      x.GetComponent<Renderer>().enabled = Show;
+      x.SetActive(true);
+        //x.GetComponent<Renderer>().enabled = Show;
   }
 
   public void ScrollContentList(int ScrollAmount)
@@ -119,7 +120,8 @@ public class Container : MonoBehaviour
 
     //Hide all
     foreach (var x in m_DisplayItems) //HACK: slow
-      x.GetComponent<Renderer>().enabled = false;
+      x.SetActive(false);
+      //x.GetComponent<Renderer>().enabled = false;
 
     //Reveal and position others
     for (var x = -sideItemCount; x < sideItemCount; x++)
@@ -127,9 +129,10 @@ public class Container : MonoBehaviour
       //Wrapping
       var wrappedx = m_ScrollIDX + x;
       while (m_ScrollIDX + wrappedx > m_DisplayItems.Count - 1) wrappedx -= m_DisplayItems.Count;
-      while (m_ScrollIDX - wrappedx < 0) wrappedx += m_DisplayItems.Count;
+      while (m_ScrollIDX + wrappedx < 0) wrappedx += m_DisplayItems.Count;
 
-      m_DisplayItems[wrappedx].GetComponent<Renderer>().enabled = true;
+      m_DisplayItems[wrappedx].SetActive(true);
+      //m_DisplayItems[wrappedx].GetComponent<Renderer>().enabled = true;
       m_DisplayItems[wrappedx].transform.position = new Vector3(m_DistFromCamera * (Mathf.Cos(Mathf.Deg2Rad * wrappedx * m_Curvature)), 0, m_DistFromCamera * (Mathf.Sin(Mathf.Deg2Rad * wrappedx * m_Curvature))) + m_Camera.transform.position + m_Camera.transform.forward * m_DistFromCamera; //the big number crunch
     }
   }
